@@ -16,7 +16,7 @@
 }
 
 % usage: \includetikz[scale=XX]{fig}, fetches from my local database
-\newcommand{\includetikz}[2][]{
+\newcommand{\includetikz}[2][scale=1]{
   \bgroup
   \pgfkeys{/tikzoptions,#1} % currently only accepts 'scale' (april 9 2025)
   %\tikzsetnextfilename{#2}

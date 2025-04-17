@@ -13,10 +13,6 @@
 \newtheorem{proposition-fr}{Proposition}
 \newtheorem{lemma-fr}{Lemme}
 \newtheorem{remark-fr}{Remarque}
-\newtheorem{definition}{Definition}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{remark}{Remark}
 
 \input{tex-macros/tikz-macros}
 
@@ -35,4 +31,11 @@
 \definecolor{mygr1}{HTML}{097e3e}
 \definecolor{mygr2}{HTML}{025520}
 \definecolor{myyellow}{HTML}{FFD700}
+
+\makeatletter
+\@ifundefined{definition}{\newtheorem{definition}{Definition}}{}
+\@ifundefined{lemma}{\newtheorem{lemma}{Lemma}}{}
+\makeatother
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
 
