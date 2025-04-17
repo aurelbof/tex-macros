@@ -4,9 +4,9 @@
 \usetikzlibrary{calc} % for computing node coordinates from others
 \usetikzlibrary{overlay-beamer-styles} % when \pause glitches in tikz beamer
 \usetikzlibrary{arrows} % arrows
-%\usetikzlibrary{external} % only compile the figure the first time
-%\tikzexternalize[only named=true, prefix=tikz-cache/]
-%\immediate\write18{mkdir -p latex-build/tikz-cache}
+\usetikzlibrary{external} % only compile the figure the first time
+\tikzexternalize[only named=true, prefix=tikz-cache/]
+\immediate\write18{mkdir -p latex-build/tikz-cache}
 
 % used to pass "scale=XX" as includetikz option
 \pgfkeys{
@@ -19,7 +19,7 @@
 \newcommand{\includetikz}[2][scale=1]{
   \bgroup
   \pgfkeys{/tikzoptions,#1} % currently only accepts 'scale' (april 9 2025)
-  %\tikzsetnextfilename{#2}
+  \tikzsetnextfilename{#2}
   \include{tex-macros/tikz-figures/#2}% Include the standalone TikZ file
   \egroup
 }
