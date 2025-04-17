@@ -1,0 +1,50 @@
+\documentclass[aspectratio=169]{beamer}
+
+\input{tex-macros/general-macros}
+
+\usefonttheme{structurebold} % bold sans serif titles etc
+\useinnertheme{rectangles} % itemize et enumerate: rectangles
+\useoutertheme[subsection=false]{miniframes} % clickable dots on headline
+
+\setbeamertemplate{headline} % customize miniframes headline
+{
+  \begin{beamercolorbox}
+    [colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[ht=2.5ex,dp=2.5ex]
+    {section in head/foot} % Navigation bar
+    \insertnavigation{0.8\paperwidth}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}[frame number]{} % only frame number on footline
+\setbeamertemplate{navigation symbols}{} % no navigation symbols
+\setbeamertemplate{caption}{\raggedright\insertcaption\par} % no "Figure:"
+%\setbeamertemplate{page number in head/foot}[appendixframenumber]
+
+\setbeamertemplate{frametitle} % customize frame title
+{
+\begin{centering}
+\insertframetitle\par
+\end{centering}
+}
+
+\usepackage{appendixnumberbeamer} % appendix pages don't count
+\usepackage{pifont} % checkmark and crossmark
+\usepackage{manfnt} % bend sign
+
+%\usepackage{caption}
+%\captionsetup[figure]{labelformat=empty} % no more fig
+
+\newcommand{\cmark}{\textcolor{mygr1}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{myred}{\ding{55}}}
+
+\usecolortheme[named=mylb2]{structure}
+\setbeamercolor{section in head/foot}{bg=mylb1!25} % background color of nav
+
+\AtBeginSection[]{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+  

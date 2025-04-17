@@ -1,0 +1,50 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}[scale=\scale]
+    \def\arrowlength{2cm}
+    \def\branchdistance{.5cm}
+
+    \foreach \z in {1,...,6} {
+      \node[] (x\z) at ($\z*(0,-\branchdistance)$)  {};
+      \node[] (y\z) at ($(\arrowlength,-\z*\branchdistance)$) {};
+      \draw[->] (x\z) -- (y\z);
+    }
+
+    \node[] at (x1.west) {$*$};
+    \node[] at (x3.west) {$*$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] (x1.west) ++(0,-0.5*\branchdistance) -- +(0,-\branchdistance);
+    \node[] at (x4.west) {$0$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] (x4.west) ++(0,-0.5*\branchdistance) -- +(0,-\branchdistance);
+    \node[] at (x6.west) {$0$};
+
+    \node[] (r1) [left=0.5cm of x1.north] {};
+    \node[] (r2) [left=0.5cm of x3.south] {};
+    \draw[<->] (r1) -- (r2) node[left,pos=0.5] {$r$};
+
+    \node[] (c1) [left=0.5cm of x4.north] {};
+    \node[] (c2) [left=0.5cm of x6.south] {};
+    \draw[<->] (c1) -- (c2) node[left,pos=0.5] {$c$};
+
+    \draw (y1.west) +(0,.5*\branchdistance) node (rect1) {};
+    \draw (y6) +(.3cm,-.5*\branchdistance) node (rect2) {};
+
+    \draw[rounded corners] (rect1) rectangle (rect2) node[pos=0.5] {$P$};
+
+    \foreach \z in {1,...,6} {
+      \node[] (xx\z) at (rect2.west |- y\z)  {};
+      \draw[->] (xx\z) -- +(\arrowlength,0) node (yy\z) {};
+    }
+
+    \def\outputoff{.5mm}
+    \node[] (yyy1) [right=\outputoff of yy1] {$*$};
+    \node[] (yyy3) [right=\outputoff of yy3] {$*$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] (yyy1) ++(0,-0.5*\branchdistance) -- +(0,-\branchdistance);
+    \node[] (yyy4) [right=\outputoff of yy4] {$0$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] (yyy4) ++(0,-0.5*\branchdistance) -- +(0,-\branchdistance);
+    \node[] (yyy6) [right=\outputoff of yy6] {$0$};
+
+  \end{tikzpicture}
+\end{document}
+
+

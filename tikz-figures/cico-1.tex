@@ -1,0 +1,40 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}[scale=\scale]
+    \def\arrowlength{1.5cm}
+    \def\branchdistance{.5cm}
+
+    \foreach \z in {1,...,4} {
+      \node[] (x\z) at ($\z*(0,-\branchdistance)$)  {};
+      \node[] (y\z) at ($(\arrowlength,-\z*\branchdistance)$) {};
+      \draw[->] (x\z) -- (y\z);
+    }
+
+    \node[] (star1) at (x1.west) {$\bm{*}$};
+    \node[] (star2) at (x3.west) {$\bm{*}$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] ($ (star1) + (0,-0.4*\branchdistance) $) -- ($ (star2) - (0,-0.4*\branchdistance) $);
+    \node[] at (x4.west) {$0$};
+
+    \node[] (r1) [left=0.5cm of x1.north] {};
+    \node[] (r2) [left=0.5cm of x3.south] {};
+
+    \draw (y1.west) +(0,.5*\branchdistance) node (rect1) {};
+    \draw (y4) +(.3cm,-.5*\branchdistance) node (rect2) {};
+
+    \draw[rounded corners] (rect1) rectangle (rect2) node[pos=0.5] {$P$};
+
+    \foreach \z in {1,...,4} {
+      \node[] (xx\z) at (rect2.west |- y\z)  {};
+      \draw[->] (xx\z) -- +(\arrowlength,0) node (yy\z) {};
+    }
+
+    \def\outputoff{0mm}
+    \node[] (star3) [right=\outputoff of yy1] {$\bm{*}$};
+    \node[] (star4) [right=\outputoff of yy3] {$\bm{*}$};
+    \draw[dash pattern=on 0pt off 1mm, line cap=round, thick] ($ (star3) + (0,-0.4*\branchdistance) $) -- ($ (star4) - (0,-0.4*\branchdistance) $);
+    \node[] (yyy4) [right=\outputoff of yy4] {$0$};
+  \end{tikzpicture}
+\end{document}
+
+

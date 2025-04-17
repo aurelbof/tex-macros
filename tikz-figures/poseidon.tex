@@ -1,0 +1,111 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}[
+	scale = \scale,
+	transform shape,
+	sbox/.style={rounded corners=2pt, rectangle, draw, thick, minimum size = 1cm, anchor=south},	
+	outer/.style={rounded corners=2pt, rectangle, draw, thick, minimum height = 4cm, minimum width = 1cm, anchor=south},
+	]
+	
+	\begin{scope}[xshift=-6cm,name prefix=RF1/]
+		\node[outer] (AddC) at (0.5,0) {AddC};
+		\node[sbox] (s1) at ([xshift=1.5cm, yshift=-1cm] AddC.north) {$x^d$};
+		\node[sbox] (s2) at ([xshift=1.5cm, yshift=-2cm] AddC.north) {$x^d$};
+		\node[sbox, draw=none] (s3) at ([xshift=1.5cm, yshift=-3cm] AddC.north) {$\vdots$};
+		\node[sbox] (s4) at ([xshift=1.5cm, yshift=-4cm] AddC.north) {$x^d$};
+		\node[outer, anchor=center] (MDS) at ([xshift=3cm,yshift = 0] AddC) {M};
+
+		\draw[->] (AddC.east|-s1.west) -- (s1.west);
+		\draw[->] (AddC.east|-s2.west) -- (s2.west);
+		\draw[->] (AddC.east |-s4.west) -- (s4.west);
+
+		\draw[<-]  (AddC.west|-s1.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s2.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s3.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s4.west) -- ++(-0.5,0);
+
+		\draw[->] (s1.east) -- (MDS.west|-s1.west); 
+		\draw[->] (s2.east) -- (MDS.west|-s2.east);
+		\draw[->] (s4.east) -- (MDS.west|-s4.east);
+
+		\draw[->]  (MDS.east|-s1.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s2.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s3.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s4.west) -- ++(+0.5,0);
+
+		\draw[<->]
+        ($(AddC.south) + (-1cm, -0.5cm)$) -- 
+        ($(MDS.south) + (1cm, -0.5cm)$) node[midway, below] {$R_F/2$ rounds};
+
+	\end{scope}
+
+	\node[sbox,draw=none,right=1cm of RF1/MDS.center] {\dots};
+
+	\begin{scope}[xshift=0cm,name prefix=RF2/]
+		\node[outer] (AddC) at (0.5,0) {AddC};
+		\node[sbox] (s1) at ([xshift=1.5cm, yshift=-1cm] AddC.north) {$x^d$};
+		\node[sbox, draw=none] (s2) at ([xshift=1.5cm, yshift=-2cm] AddC.north) {};
+		\node[sbox, draw=none] (s3) at ([xshift=1.5cm, yshift=-3cm] AddC.north) {$\vdots$};
+		\node[sbox, draw=none] (s4) at ([xshift=1.5cm, yshift=-4cm] AddC.north) {};
+		\node[outer, anchor=center] (MDS) at ([xshift=3cm,yshift = 0] AddC) {M};
+
+		\draw[->] (AddC.east|-s1.west) -- (s1.west);
+	
+		\draw[<-]  (AddC.west|-s1.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s2.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s3.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s4.west) -- ++(-0.5,0);
+
+		\draw[->] (s1.east) -- (MDS.west|-s1.west); 
+		\draw[->] (AddC.east|-s2.east) -- (MDS.west|-s2.east);
+		\draw[->] (AddC.east|-s4.east) -- (MDS.west|-s4.east);
+
+		\draw[->]  (MDS.east|-s1.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s2.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s3.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s4.west) -- ++(+0.5,0);
+
+		\draw[<->]
+        ($(AddC.south) + (-1cm, -0.5cm)$) -- 
+        ($(MDS.south) + (1cm, -0.5cm)$) node[midway, below] {$R_P$ rounds};
+
+	\end{scope}
+
+	\node[sbox,draw=none,right=1cm of RF2/MDS.center] {\dots};
+
+	\begin{scope}[xshift=6cm,name prefix=RF3/]
+		\node[outer] (AddC) at (0.5,0) {AddC};
+		\node[sbox] (s1) at ([xshift=1.5cm, yshift=-1cm] AddC.north) {$x^d$};
+		\node[sbox] (s2) at ([xshift=1.5cm, yshift=-2cm] AddC.north) {$x^d$};
+		\node[sbox, draw=none] (s3) at ([xshift=1.5cm, yshift=-3cm] AddC.north) {$\vdots$};
+		\node[sbox] (s4) at ([xshift=1.5cm, yshift=-4cm] AddC.north) {$x^d$};
+		\node[outer, anchor=center] (MDS) at ([xshift=3cm,yshift = 0] AddC) {M};
+
+		\draw[->] (AddC.east|-s1.west) -- (s1.west);
+		\draw[->] (AddC.east|-s2.west) -- (s2.west);
+		\draw[->] (AddC.east |-s4.west) -- (s4.west);
+
+		\draw[<-]  (AddC.west|-s1.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s2.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s3.west) -- ++(-0.5,0);
+		\draw[<-]  (AddC.west|-s4.west) -- ++(-0.5,0);
+
+		\draw[->] (s1.east) -- (MDS.west|-s1.west); 
+		\draw[->] (s2.east) -- (MDS.west|-s2.east);
+		\draw[->] (s4.east) -- (MDS.west|-s4.east);
+
+		\draw[->]  (MDS.east|-s1.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s2.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s3.west) -- ++(+0.5,0);
+		\draw[->]  (MDS.east|-s4.west) -- ++(+0.5,0);
+
+
+		\draw[<->]
+        ($(AddC.south) + (-1cm, -0.5cm)$) -- 
+        ($(MDS.south) + (1cm, -0.5cm)$) node[midway, below] {$R_F/2$ rounds};
+
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}
