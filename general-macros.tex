@@ -4,8 +4,10 @@
 \usepackage{amsmath} % crucial package
 \usepackage{amsthm} % ams-style theorems
 \usepackage{bm} % bold math symbols
-\usepackage{xcolor} % more colors
+\usepackage{xcolor} % colors
+\usepackage{xcolor-solarized} % more colors
 \usepackage[T1]{fontenc} % modern encoding, better than OT1, the default
+\usepackage[pdfusetitle]{hyperref} % clickable links + pdf metadata
 
 \newtheorem{definition-fr}{Définition}
 \newtheorem{example-fr}{Exemple}
@@ -14,28 +16,43 @@
 \newtheorem{lemma-fr}{Lemme}
 \newtheorem{remark-fr}{Remarque}
 
+% some document classes pre-define these, i think
+\makeatletter
+\@ifundefined{definition}{\newtheorem{definition}{Definition}}{}
+\@ifundefined{lemma}{\newtheorem{lemma}{Lemma}}{}
+\@ifundefined{proposition}{\newtheorem{proposition}{Proposition}}{}
+\@ifundefined{remark}{\newtheorem{remark}{Remark}}{}
+\makeatother
+
 \input{tex-macros/tikz-macros}
 
 \newcommand{\bigOt}{\widetilde{\mathcal{O}}}
 \newcommand{\bigO}{\mathcal{O}}
 
-\definecolor{mypurp}{HTML}{8f0c97}
-\definecolor{myred}{HTML}{9f103b}
-\definecolor{myor}{HTML}{ae3011}
-\definecolor{mydarkor1}{HTML}{96240f}
-\definecolor{mydarkor2}{HTML}{7f180c}
-\definecolor{mylb1}{HTML}{00557e}
-\definecolor{mylb2}{HTML}{013157}
-\definecolor{mybl1}{HTML}{0d08a9}
-\definecolor{mybl2}{HTML}{04037f}
-\definecolor{mygr1}{HTML}{097e3e}
-\definecolor{mygr2}{HTML}{025520}
-\definecolor{myyellow}{HTML}{FFD700}
+\colorlet{my-purple}{solarized-violet}
+\colorlet{my-red}{solarized-red}
+\colorlet{my-orange}{solarized-orange}
+\definecolor{my-darkor1}{HTML}{96240f}
+\definecolor{my-darkor2}{HTML}{7f180c}
+\definecolor{my-lb1}{HTML}{00557e}
+\definecolor{my-lb2}{HTML}{013157}
+\colorlet{my-blue}{solarized-blue}
+\definecolor{my-bl1}{HTML}{0d08a9}
+\definecolor{my-bl2}{HTML}{04037f}
+\colorlet{my-cyan}{solarized-cyan}
+\colorlet{my-green}{solarized-green}
+\definecolor{my-gr1}{HTML}{097e3e}
+\definecolor{my-gr2}{HTML}{025520}
+\colorlet{my-yellow}{solarized-yellow}
+\colorlet{my-magenta}{solarized-magenta}
 
-\makeatletter
-\@ifundefined{definition}{\newtheorem{definition}{Definition}}{}
-\@ifundefined{lemma}{\newtheorem{lemma}{Lemma}}{}
-\makeatother
-\newtheorem{proposition}{Proposition}
-\newtheorem{remark}{Remark}
+
+\hypersetup{
+  colorlinks = true,
+  linkcolor = my-red,
+  citecolor = my-green,
+  filecolor = my-cyan,
+  urlcolor = my-magenta
+}
+
 
