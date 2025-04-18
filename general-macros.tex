@@ -55,4 +55,32 @@
   urlcolor = my-magenta
 }
 
+% new commands: \bibalias and \acite
+% 1. add \bibalias{<alias>}{<source>} in preamble
+% 2. \acite{<alias>} expands to \cite{<source>}
+% (having different keys for the same citation is not supported by bibtex)
+\makeatletter
+\newcommand\bibalias[2]{%
+  \@namedef{bibali@#1}{#2}%
+}
+\newtoks\biba@toks
+\newcommand\acite[2][]{%
+  \biba@toks{\cite#1}%
+  \def\biba@comma{}%
+  \def\biba@all{}%
+  \@for\biba@one:=#2\do{%
+    \@ifundefined{bibali@\biba@one}{%
+      \edef\biba@all{\biba@all\biba@comma\biba@one}%
+    }{%
+      \PackageInfo{bibalias}{%
+        Replacing citation `\biba@one' with `\@nameuse{bibali@\biba@one}'
+      }%
+      \edef\biba@all{\biba@all\biba@comma\@nameuse{bibali@\biba@one}}%
+    }%
+    \def\biba@comma{,}%
+  }%
+  \edef\biba@tmp{\the\biba@toks{\biba@all}}%
+  \biba@tmp
+}
+\makeatother
 
