@@ -1,0 +1,19 @@
+\makeatletter
+\@ifclassloaded{llncs}{}{
+  \usepackage{amsthm} % ams-style theorems
+  \newtheorem{definition-fr}{Définition}
+  \newtheorem{example-fr}{Exemple}
+  \newtheorem{theorem-fr}{Théorème}
+  \newtheorem{proposition-fr}{Proposition}
+  \newtheorem{lemma-fr}{Lemme}
+  \newtheorem{remark-fr}{Remarque}
+
+  % some document classes pre-define these, i think
+  \makeatletter
+  \@ifundefined{definition}{\newtheorem{definition}{Definition}}{}
+  \@ifundefined{lemma}{\newtheorem{lemma}{Lemma}}{}
+  \@ifundefined{proposition}{\newtheorem{proposition}{Proposition}}{}
+  \@ifundefined{theorem}{\newtheorem{theorem}{Theorem}}{}
+  \@ifundefined{remark}{\newtheorem{remark}{Remark}}{}
+}
+\makeatother

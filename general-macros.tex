@@ -3,11 +3,6 @@
 \usepackage{amsfonts} % mathbb etc
 \usepackage{amsmath} % crucial package
 
-% llncs class defines a \proof command which conflicts with amsthm.
-\let\proof\relax
-\let\endproof\relax
-\usepackage{amsthm} % ams-style theorems
-
 \usepackage{bm} % bold math symbols
 \usepackage{xcolor} % colors
 \usepackage{xcolor-solarized} % more colors
@@ -15,22 +10,7 @@
 \usepackage[pdfusetitle]{hyperref} % clickable links + pdf metadata
 \usepackage{orcidlink} % for clickable orcid links in author
 
-\newtheorem{definition-fr}{Définition}
-\newtheorem{example-fr}{Exemple}
-\newtheorem{theorem-fr}{Théorème}
-\newtheorem{proposition-fr}{Proposition}
-\newtheorem{lemma-fr}{Lemme}
-\newtheorem{remark-fr}{Remarque}
-
-% some document classes pre-define these, i think
-\makeatletter
-\@ifundefined{definition}{\newtheorem{definition}{Definition}}{}
-\@ifundefined{lemma}{\newtheorem{lemma}{Lemma}}{}
-\@ifundefined{proposition}{\newtheorem{proposition}{Proposition}}{}
-\@ifundefined{theorem}{\newtheorem{theorem}{Theorem}}{}
-\@ifundefined{remark}{\newtheorem{remark}{Remark}}{}
-\makeatother
-
+\input{tex-macros/theorems}
 \input{tex-macros/tikz-macros}
 
 \newcommand{\bigOt}{\widetilde{\mathcal{O}}}
