@@ -2,12 +2,18 @@
 \usepackage{standalone} % tikz figures are often in standalone
 \usepackage{amsfonts} % mathbb etc
 \usepackage{amsmath} % crucial package
+
+% llncs class defines a \proof command which conflicts with amsthm.
+\let\proof\relax
+\let\endproof\relax
 \usepackage{amsthm} % ams-style theorems
+
 \usepackage{bm} % bold math symbols
 \usepackage{xcolor} % colors
 \usepackage{xcolor-solarized} % more colors
 \usepackage[T1]{fontenc} % modern encoding, better than OT1, the default
 \usepackage[pdfusetitle]{hyperref} % clickable links + pdf metadata
+\usepackage{orcidlink} % for clickable orcid links in author
 
 \newtheorem{definition-fr}{Définition}
 \newtheorem{example-fr}{Exemple}
@@ -47,7 +53,6 @@
 \colorlet{my-yellow}{solarized-yellow}
 \colorlet{my-magenta}{solarized-magenta}
 
-
 \hypersetup{
   colorlinks = true,
   linkcolor = my-red,
@@ -84,4 +89,6 @@
   \biba@tmp
 }
 \makeatother
+
+\newcommand{\myorcid}{0009-0003-0016-2667}
 
