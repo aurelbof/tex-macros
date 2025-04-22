@@ -34,12 +34,13 @@
 \colorlet{my-magenta}{solarized-magenta}
 
 \hypersetup{
-  colorlinks = true,
+  colorlinks = true, % fixes ugly boxes
   linkcolor = my-red,
   citecolor = my-green,
   filecolor = my-cyan,
-  urlcolor = my-magenta
+  urlcolor = my-magenta,
 }
+\setcounter{tocdepth}{2} % for metadata: 0 = to title, 3 = to subsubsecs
 
 % new commands: \bibalias and \acite
 % 1. add \bibalias{<alias>}{<source>} in preamble
