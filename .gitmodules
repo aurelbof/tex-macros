@@ -1,3 +1,6 @@
 [submodule "iacrtrans"]
 	path = iacrtrans
 	url = git@github.com:aurelbof/iacrtrans.git
+[submodule "cryptobib"]
+	path = cryptobib
+	url = https://github.com/cryptobib/export
