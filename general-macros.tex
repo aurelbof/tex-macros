@@ -52,8 +52,8 @@
   \@namedef{bibali@#1}{#2}%
 }
 \newtoks\biba@toks
-\newcommand\acite[2][]{%
-  \biba@toks{\cite#1}%
+\newcommand{\acite}{\@ifnextchar[{\acite@opt}{\acite@noopt}}
+\newcommand{\acite@opt}[2][]{%
   \def\biba@comma{}%
   \def\biba@all{}%
   \@for\biba@one:=#2\do{%
@@ -67,8 +67,24 @@
     }%
     \def\biba@comma{,}%
   }%
-  \edef\biba@tmp{\the\biba@toks{\biba@all}}%
-  \biba@tmp
+  \cite[#1]{\biba@all}%
+}
+\newcommand{\acite@noopt}[1]{%
+  % #1 = aliases
+  \def\biba@comma{}%
+  \def\biba@all{}%
+  \@for\biba@one:=#1\do{%
+    \@ifundefined{bibali@\biba@one}{%
+      \edef\biba@all{\biba@all\biba@comma\biba@one}%
+    }{%
+      \PackageInfo{bibalias}{%
+        Replacing citation `\biba@one' with `\@nameuse{bibali@\biba@one}'
+      }%
+      \edef\biba@all{\biba@all\biba@comma\@nameuse{bibali@\biba@one}}%
+    }%
+    \def\biba@comma{,}%
+  }%
+  \cite{\biba@all}%
 }
 \makeatother
 
