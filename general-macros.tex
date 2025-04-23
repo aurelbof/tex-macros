@@ -48,33 +48,27 @@
 % 1. add \bibalias{<alias>}{<source>} in preamble
 % 2. \acite{<alias>} expands to \cite{<source>}
 % (having different keys for the same citation is not supported by bibtex)
+% improved version: takes option \acite[opt]{alias} and multiple aliases
+% as in \acite{ref1, ref2}
 \makeatletter
 \newcommand\bibalias[2]{%
   \@namedef{bibali@#1}{#2}%
 }
-\newtoks\biba@toks
 \newcommand{\acite}{\@ifnextchar[{\acite@opt}{\acite@noopt}}
 \newcommand{\acite@opt}[2][]{%
-  \def\biba@comma{}%
-  \def\biba@all{}%
-  \@for\biba@one:=#2\do{%
-    \@ifundefined{bibali@\biba@one}{%
-      \edef\biba@all{\biba@all\biba@comma\biba@one}%
-    }{%
-      \PackageInfo{bibalias}{%
-        Replacing citation `\biba@one' with `\@nameuse{bibali@\biba@one}'
-      }%
-      \edef\biba@all{\biba@all\biba@comma\@nameuse{bibali@\biba@one}}%
-    }%
-    \def\biba@comma{,}%
-  }%
+  \acite@parse{#2}%
   \cite[#1]{\biba@all}%
 }
 \newcommand{\acite@noopt}[1]{%
-  % #1 = aliases
+  \acite@parse{#1}%
+  \cite{\biba@all}%
+}
+\newcommand{\acite@parse}[1]{%
+  % Remove spaces after commas
+  \edef\biba@temp{\zap@space#1 \@empty}%
   \def\biba@comma{}%
   \def\biba@all{}%
-  \@for\biba@one:=#1\do{%
+  \@for\biba@one:=\biba@temp\do{%
     \@ifundefined{bibali@\biba@one}{%
       \edef\biba@all{\biba@all\biba@comma\biba@one}%
     }{%
@@ -85,9 +79,9 @@
     }%
     \def\biba@comma{,}%
   }%
-  \cite{\biba@all}%
 }
 \makeatother
+
 
 \newcommand{\myorcid}{0009-0003-0016-2667}
 \newcommand{\todoAU}[2][]{\todo[color=my-green!30,#1]{Aurélien: #2}}
