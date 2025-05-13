@@ -55,33 +55,32 @@
   \@namedef{bibali@#1}{#2}%
 }
 \newcommand{\acite}{\@ifnextchar[{\acite@opt}{\acite@noopt}}
-\newcommand{\acite@opt}[2][]{%
-  \acite@parse{#2}%
-  \cite[#1]{\biba@all}%
-}
-\newcommand{\acite@noopt}[1]{%
-  \acite@parse{#1}%
-  \cite{\biba@all}%
-}
-\newcommand{\acite@parse}[1]{%
-  % Remove spaces after commas
-  \edef\biba@temp{\zap@space#1 \@empty}%
-  \def\biba@comma{}%
-  \def\biba@all{}%
-  \@for\biba@one:=\biba@temp\do{%
-    \@ifundefined{bibali@\biba@one}{%
-      \edef\biba@all{\biba@all\biba@comma\biba@one}%
-    }{%
-      \PackageInfo{bibalias}{%
-        Replacing citation `\biba@one' with `\@nameuse{bibali@\biba@one}'
+  \newcommand{\acite@opt}[2][]{%
+    \acite@parse{#2}%
+    \cite[#1]{\biba@all}%
+  }
+  \newcommand{\acite@noopt}[1]{%
+    \acite@parse{#1}%
+    \cite{\biba@all}%
+  }
+  \newcommand{\acite@parse}[1]{%
+    % Remove spaces after commas
+    \edef\biba@temp{\zap@space#1 \@empty}%
+    \def\biba@comma{}%
+    \def\biba@all{}%
+    \@for\biba@one:=\biba@temp\do{%
+      \@ifundefined{bibali@\biba@one}{%
+        \edef\biba@all{\biba@all\biba@comma\biba@one}%
+      }{%
+        \PackageInfo{bibalias}{%
+          Replacing citation `\biba@one' with `\@nameuse{bibali@\biba@one}'
+        }%
+        \edef\biba@all{\biba@all\biba@comma\@nameuse{bibali@\biba@one}}%
       }%
-      \edef\biba@all{\biba@all\biba@comma\@nameuse{bibali@\biba@one}}%
+      \def\biba@comma{,}%
     }%
-    \def\biba@comma{,}%
-  }%
-}
-\makeatother
+  }
+  \makeatother
 
-
-\newcommand{\myorcid}{0009-0003-0016-2667}
-\newcommand{\todoAU}[2][]{\todo[color=my-blue!30,#1]{Aurélien: #2}}
+  \newcommand{\myorcid}{0009-0003-0016-2667}
+  \newcommand{\todoAU}[2][]{\todo[color=my-blue!30,#1]{Aurélien: #2}}
