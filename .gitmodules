@@ -1,6 +1,6 @@
 [submodule "iacrtrans"]
 	path = iacrtrans
-    url = git@github.com/Cryptosaurus/iacrtrans
+    url = https://github.com/Cryptosaurus/iacrtrans
 [submodule "cryptobib"]
 	path = cryptobib
 	url = https://github.com/cryptobib/export
