@@ -24,3 +24,11 @@
   \egroup
 }
 
+% usage: \inputtikz[scale=XX]{fig}, fetches from my local database
+\newcommand{\inputtikz}[2][scale=1]{
+  \bgroup
+  \pgfkeys{/tikzoptions,#1} % currently only accepts 'scale' (april 9 2025)
+  \tikzsetnextfilename{#2}
+  \input{tex-macros/tikz-figures/#2}% Include the standalone TikZ file
+  \egroup
+}
