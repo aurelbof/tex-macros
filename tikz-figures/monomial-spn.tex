@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}[scale=\scale]
+  \begin{scope}[xshift=0cm,xscale=0.146,yscale=0.066]
+    \draw[->]   (0,0) node [left=1pt] {$X_0$} -- +(7,0);
+    \draw[->]  (0,-8) node [left=1pt] {$X_1$} -- +(7,0);
+    \draw[->]  (0,-16) node [left=1pt] {$X_2$} -- +(7,0);
+
+    \draw[rounded corners]  (7,-3) rectangle node{$x^\alpha$} +(6,6);
+    \draw[rounded corners]  (7,-11) rectangle node{$x^\alpha$} +(6,6);
+    \draw[rounded corners]  (7,-19) rectangle node{$x^\alpha$} +(6,6);
+
+    \draw[->]  (13,0) -- +(6,0);
+    \draw[->]  (13,-8) -- +(6,0);
+    \draw[->]  (13,-16) -- +(6,0);
+
+    \draw[rounded corners]  (19,-19) rectangle node{$M$} +(6,22);
+
+    \draw[->]  (25,0) -- +(4,0);
+    \draw[->]  (29,0) -- +(16,0);
+
+    \draw[->]  (25,-8) -- +(9,0);
+    \draw[->]  (34,-8) -- +(11,0);
+
+    \draw[->]  (25,-16) -- +(14,0);
+    \draw[->]  (39,-16) -- +(6,0);
+
+    \draw[->]  (30,8) node{$r_{0}$} ++(0,-2) -- +(0,-5);
+    \draw[->]  (35,8) node{$r_{1}$} ++(0,-2) -- +(0,-13);
+    \draw[->]  (40,8) node{$r_{2}$} ++(0,-2) -- +(0,-21);
+
+    \draw  (30,0) node{$\oplus$} ;
+    \draw  (35,-8) node{$\oplus$} ;
+    \draw  (40,-16) node{$\oplus$} ;
+  \end{scope}
+\end{tikzpicture}
+\end{document}
