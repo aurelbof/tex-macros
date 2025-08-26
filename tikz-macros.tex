@@ -2,6 +2,7 @@
 \usetikzlibrary{positioning} % for the "below of=1cm" type of options
 \usetikzlibrary{intersections} % e.g. for pyramid
 \usetikzlibrary{calc} % for computing node coordinates from others
+\usetikzlibrary{math} % for pgf math stuff
 \usetikzlibrary{overlay-beamer-styles} % when \pause glitches in tikz beamer
 \usetikzlibrary{arrows} % arrows
 \usetikzlibrary{external} % only compile the figure the first time
@@ -13,6 +14,28 @@
   /tikzoptions/.is family, % Namespace
   /tikzoptions/.cd, % Namespace
   scale/.store in=\scale, % Store the value of 'scale'
+}
+
+% oplus node, usage \node[oplus=1cm] or any radius value
+\tikzset{
+  oplus/.style={
+    circle, draw,
+    minimum size=2*#1, % diameter = 2 * radius
+    inner sep=0pt,
+    transform shape=true,
+    append after command={
+      % Draw vertical line
+      \pgfextra{
+        \def\r{#1}
+        % Draw vertical line
+        \draw ($(\tikzlastnode) + (0,-\r)$) --
+        ($(\tikzlastnode) + (0,\r)$);
+        % Draw horizontal line
+        \draw ($(\tikzlastnode) + (-\r,0)$) --
+        ($(\tikzlastnode) + (\r,0)$);
+      }
+    },
+  }
 }
 
 % usage: \includetikz[scale=XX]{fig}, fetches from my local database

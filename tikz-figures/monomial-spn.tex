@@ -1,38 +1,36 @@
 \documentclass{standalone}
 \input{tex-macros/tikz-standalone}
 \begin{document}
-\begin{tikzpicture}[scale=\scale]
-  \begin{scope}[xshift=0cm,xscale=0.146,yscale=0.066]
-    \draw[->]   (0,0) node [left=1pt] {$X_0$} -- +(7,0);
-    \draw[->]  (0,-8) node [left=1pt] {$X_1$} -- +(7,0);
-    \draw[->]  (0,-16) node [left=1pt] {$X_2$} -- +(7,0);
+\begin{tikzpicture}
+  \def\arrowlength{2em}
+  \def\branchwidth{2em}
+  \def\sboxw{2em}
+  \def\sboxh{\sboxw}
+  \def\linw{2em}
+  \def\rcdist{1em}
+  \def\rcinc{1.5em}
+  \def\oplusr{0.5em}
+  \newcounter{branchnumber}
+  \setcounter{branchnumber}{3}
+  \edef\b{\arabic{branchnumber}}
 
-    \draw[rounded corners]  (7,-3) rectangle node{$x^\alpha$} +(6,6);
-    \draw[rounded corners]  (7,-11) rectangle node{$x^\alpha$} +(6,6);
-    \draw[rounded corners]  (7,-19) rectangle node{$x^\alpha$} +(6,6);
+  \foreach \i in {1,...,\b} {
+    \node (x\i) at (0,{-(\i)*\branchwidth}) {$X_{\i}$};
+    \draw[->] (x\i) --  +(\arrowlength,0) coordinate (s\i);
+    \draw[rounded corners]
+    ($(s\i) + (0,-0.5*\sboxh)$) rectangle node (sbox\i) {$x^\alpha$}
+    ($(s\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(s\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (m\i);
+    \draw[->] (m\i) ++(\linw,0) -- +(\i*\rcinc,0) coordinate (rc\i);
+    \coordinate[oplus=\oplusr, anchor=west] (xor\i) at (rc\i);
+    \draw[->] ($(xor\i) + (0,{(\i-1)*\branchwidth + \rcdist})$)
+    node[anchor=south] {$r_{\i}$} -- (xor\i.north);
+    \draw[->] (xor\i.east) -- +({(\b - \i) * \rcinc + \rcdist},0);
+  }
 
-    \draw[->]  (13,0) -- +(6,0);
-    \draw[->]  (13,-8) -- +(6,0);
-    \draw[->]  (13,-16) -- +(6,0);
-
-    \draw[rounded corners]  (19,-19) rectangle node{$M$} +(6,22);
-
-    \draw[->]  (25,0) -- +(4,0);
-    \draw[->]  (29,0) -- +(16,0);
-
-    \draw[->]  (25,-8) -- +(9,0);
-    \draw[->]  (34,-8) -- +(11,0);
-
-    \draw[->]  (25,-16) -- +(14,0);
-    \draw[->]  (39,-16) -- +(6,0);
-
-    \draw[->]  (30,8) node{$r_{0}$} ++(0,-2) -- +(0,-5);
-    \draw[->]  (35,8) node{$r_{1}$} ++(0,-2) -- +(0,-13);
-    \draw[->]  (40,8) node{$r_{2}$} ++(0,-2) -- +(0,-21);
-
-    \draw  (30,0) node{$\oplus$} ;
-    \draw  (35,-8) node{$\oplus$} ;
-    \draw  (40,-16) node{$\oplus$} ;
-  \end{scope}
+  \coordinate (mcorner1) at ($(sbox1.north -| m1)$);
+  \coordinate (mcorner2) at ($(sbox\b.south -| {$(m\b) + (\linw,0)$})$);
+  \draw[rounded corners] (mcorner1) rectangle node {$M$} (mcorner2);
 \end{tikzpicture}
 \end{document}
