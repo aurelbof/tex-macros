@@ -1,0 +1,100 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\arrowlength{2em}
+  \def\branchwidth{2em}
+  \def\sboxw{2em}
+  \def\sboxh{\sboxw}
+  \def\linw{2em}
+  \def\rcdist{1em}
+  \def\rcinc{1.5em}
+  \def\oplusr{0.5em}
+  \def\sidebranchdist{2*\branchwidth}
+  \def\kschw{\sboxw + \arrowlength + \linw}
+  \newcounter{branchnumber}
+  \setcounter{branchnumber}{3}
+  \edef\b{\arabic{branchnumber}}
+
+  \foreach \i in {1,...,\b} {
+    \node (x\i) at (0,{-(\i)*\branchwidth}) {$X_{\i}$};
+    \draw[->] (x\i) --  +(\arrowlength,0) coordinate (s\i);
+
+    \draw[rounded corners]
+    ($(s\i) + (0,-0.5*\sboxh)$) rectangle node (sbox\i) {$x^\alpha$}
+    ($(s\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(s\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (m\i);
+
+    \draw[->] (m\i) ++(\linw,0) -- +(\i*\rcinc,0) coordinate (rc\i);
+    \coordinate[oplus=\oplusr, anchor=west] (xor\i) at (rc\i);
+    %\draw[->] ($(xor\i) + (0,{(\i-1)*\branchwidth + \rcdist})$)
+    %node[anchor=south] {$r_{\i}$} -- (xor\i.north);
+    \draw[->] (xor\i.east) -- +({(\b - \i + 1) * \rcinc},0) coordinate(sinv\i);
+
+    \draw[rounded corners]
+    ($(sinv\i) + (0,-0.5*\sboxh)$) rectangle node (sboxinv\i) {$x^{\sfrac{1}{\alpha}}$}
+    ($(sinv\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(sinv\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (minv\i);
+
+    \draw[->] (minv\i) ++(\linw,0) coordinate(minvright\i) -- +(\i*\rcinc,0) coordinate (rcinv\i);
+    \coordinate[oplus=\oplusr, anchor=west] (xorinv\i) at (rcinv\i);
+    %\draw[->] ($(xorinv\i) + (0,{(\i-1)*\branchwidth + \rcdist})$)
+    %node[anchor=south] {$r_{\i}$} -- (xorinv\i.north);
+    \draw[->] (xorinv\i.east) -- +({(\b - \i + 1) * \rcinc},0) coordinate(end\i);
+  }
+
+  % first linear layer
+  \coordinate (mcorner1) at ($(sbox1.north -| m1)$);
+  \coordinate (mcorner2) at ($(sbox\b.south -| {$(m\b) + (\linw,0)$})$);
+  \draw[rounded corners] (mcorner1) rectangle node {$M$} (mcorner2);
+  \draw[rounded corners] (mcorner1) rectangle node {$M$} (mcorner2);
+
+  % second linear layer
+  \coordinate (minvcorner1) at ($(sboxinv1.north -| minv1)$);
+  \coordinate (minvcorner2) at ($(sboxinv\b.south -| {$(minv\b) + (\linw,0)$})$);
+  \draw[rounded corners] (minvcorner1) rectangle node {$M$} (minvcorner2);
+  \draw[rounded corners] (minvcorner1) rectangle node {$M$} (minvcorner2);
+
+  % master key branch
+  \node (k0) at (0,\sidebranchdist - \branchwidth) {$K_0$};
+  \draw[->] (k0) --  (k0 -| sinv1) coordinate (ksch);
+  \coordinate (kschcorn1) at ($(ksch) + (0, 0.5*\sboxh)$);
+  \coordinate (kschcorn2) at ($(ksch -| minvright1) + (0, -0.5*\sboxh)$);
+  \draw[rounded corners] (kschcorn1) rectangle node (kschcent) {$A_0 x + 0$} (kschcorn2);
+  \draw[->] ($(kschcorn2) + (0, 0.5*\sboxh)$) -- (kschcent -| end1);
+
+  \draw[->] (k0 -| xor1.north) -- (xor1.north);
+  \draw[->] (k0 -| xor2.north) -- +(0,-{(\sidebranchdist - \sboxh)/2}) coordinate (sk);
+  \draw[rounded corners] ($(sk) + (-0.5*\sboxh,0)$) rectangle node (sboxk) {$\rho x$}
+  ($(sk) + (0.5*\sboxw, -\sboxh)$);
+  \draw[->] ($(sk) + (0,-\sboxh)$) -- (xor2.north);
+
+  \draw[->] (k0 -| xorinv1.north) -- (xorinv1.north);
+  \draw[->] (k0 -| xorinv2.north) -- +(0,-{(\sidebranchdist - \sboxh)/2}) coordinate (sk);
+  \draw[rounded corners] ($(sk) + (-0.5*\sboxh,0)$) rectangle node (sboxk) {$\rho x$}
+  ($(sk) + (0.5*\sboxw, -\sboxh)$);
+  \draw[->] ($(sk) + (0,-\sboxh)$) -- (xorinv2.north);
+
+  % tweak branch
+  \node (t) at ($(x\b) + (0,-\sidebranchdist)$) {$T$};
+  \draw[->] (t) --  +(\arrowlength,0) coordinate (hleft);
+
+  \draw[rounded corners]
+  ($(hleft) + (0,-0.5*\sboxh)$) rectangle node (hcenter) {$H$}
+  ($(hleft) + (\sboxw,0.5*\sboxh)$);
+  \draw[->] ($(hleft) + (\sboxw,0)$) -- (hleft -| end1);
+
+  \draw[->] (t -| xor3.south) -- +(0,{(\sidebranchdist - \sboxh)/2}) coordinate (st);
+  \draw[rounded corners] ($(st) + (-\sboxw,0)$) rectangle node (sboxt) {$r_0 + \text{rt}_0$}
+  ($(st) + (\sboxw, \sboxh)$);
+  \draw[->] ($(st) + (0,\sboxh)$) -- (xor3.south);
+
+  \draw[->] (t -| xorinv3.south) -- +(0,{(\sidebranchdist - \sboxh)/2}) coordinate (st);
+  \draw[rounded corners] ($(st) + (-\sboxw,0)$) rectangle node (sboxt) {$r_0 + \text{rt}_0$}
+  ($(st) + (\sboxw, \sboxh)$);
+  \draw[->] ($(st) + (0,\sboxh)$) -- (xorinv3.south);
+
+\end{tikzpicture}
+\end{document}
