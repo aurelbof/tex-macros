@@ -12,7 +12,9 @@
   \def\oplusr{0.5em}
   \def\sidebranchdist{2*\branchwidth}
   \def\kschw{\sboxw + \arrowlength + \linw}
-  \newcounter{branchnumber}
+  \makeatletter
+  \@ifundefined{c@branchnumber}{\newcounter{branchnumber}}
+  \makeatother
   \setcounter{branchnumber}{3}
   \edef\b{\arabic{branchnumber}}
 
