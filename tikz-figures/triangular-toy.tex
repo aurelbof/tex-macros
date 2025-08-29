@@ -1,0 +1,46 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\arrowlength{2em}
+  \def\bigarrowlength{5em}
+  \def\branchwidth{5em}
+  \def\sboxw{2em}
+  \def\sboxh{\sboxw}
+  \def\linw{2em}
+
+  \node (el1) at (0,0) {0};
+  \node (el2) at (0, {-\branchwidth}) {$x_0$};
+
+  \draw[->] (el1) --  ++(\arrowlength,0) coordinate (mup1);
+  \draw[->] (mup1) ++(\linw,0) -- node[below] {$P_1(x_0)$} ++(\bigarrowlength,0) coordinate (sup1);
+  \draw[->] (sup1) ++(\sboxw,0) --  ++(\arrowlength,0) coordinate (mup2);
+  \draw[->] (mup2) ++(\linw,0) -- node[below] {$P_2(x_0,x_1)$} ++(\bigarrowlength,0) coordinate (sup2);
+  \draw[->] (sup2) ++(\sboxw,0) --  ++(\arrowlength,0) coordinate (mup3);
+  \draw[->] (mup3) ++(\linw,0) -- ++(\arrowlength,0) node[anchor=west] (endup) {$G(x_0, x_1, x_2)$};
+
+  \draw[->] (el2) --  ++(\arrowlength,0) coordinate (mdown1);
+  \draw[->] (mdown1) ++(\linw,0) -- node[above] {$Q_1(x_0)$} ++(\bigarrowlength,0) coordinate (sdown1);
+  \draw[->] (sdown1) ++(\sboxw,0) --node[above] {$x_1$} ++(\arrowlength,0) coordinate (mdown2);
+  \draw[->] (mdown2) ++(\linw,0) -- node[above] {$Q_2(x_0,x_1)$} ++(\bigarrowlength,0) coordinate (sdown2);
+  \draw[->] (sdown2) ++(\sboxw,0) -- node[above] {$x_2$} ++(\arrowlength,0) coordinate (mdown3);
+  \draw[->] (mdown3) ++(\linw,0) -- ++(\arrowlength,0) node[anchor=west] (enddown) {$\ast$};
+
+  \foreach \i in {1,2} {
+    \draw[rounded corners]
+    ($(sup\i) + (0,-0.5*\sboxh)$) rectangle node {$x^\alpha$}
+    ($(sup\i) + (\sboxw,0.5*\sboxh)$);
+
+    \draw[rounded corners]
+    ($(sdown\i) + (0,-0.5*\sboxh)$) rectangle node {$x^{\sfrac{1}{\alpha}}$}
+    ($(sdown\i) + (\sboxw,0.5*\sboxh)$);
+  }
+
+  \foreach \i in {1,2,3} {
+    \coordinate (mcorner1) at ($(mup\i) + (0, 0.5*\sboxh)$);
+    \coordinate (mcorner2) at ($(mdown\i) + (\linw, -0.5*\sboxh)$);
+    \draw[rounded corners] (mcorner1) rectangle node {$A$} (mcorner2);
+  }
+
+\end{tikzpicture}
+\end{document}
