@@ -1,0 +1,79 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\arrowlength{2em}
+  \def\branchwidth{2em}
+  \def\sboxw{2em}
+  \def\sboxh{\sboxw}
+  \def\linw{2em}
+  \def\rcdist{1em}
+  \def\rcinc{1.5em}
+  \def\oplusr{0.5em}
+  \newcounter{branchnumber}
+  \setcounter{branchnumber}{12}
+  \edef\b{\arabic{branchnumber}}
+
+  \foreach \i in {1,...,\b} {
+    \pgfmathsetmacro{\ind}{int(\i - 1)}
+    \node (x\i) at (0,{-(\i)*\branchwidth}) {$s_{\ind}$};
+    \draw[->] (x\i) --  +(\arrowlength,0) coordinate (1a\i);
+    \coordinate[oplus=\oplusr, anchor=west] (1axor\i) at (1a\i);
+    \draw[<-] (1axor\i.north) -- +(0, \branchwidth/2 - \oplusr);
+    \draw[->] (1axor\i.east) --  +(\arrowlength,0) coordinate (1m\i);
+    \draw[->] (1m\i) ++(\linw,0) -- +(\arrowlength,0) coordinate (s\i);
+    \draw[rounded corners]
+    ($(s\i) + (0,-0.5*\sboxh)$) rectangle node (sbox\i) {$x^7$}
+    ($(s\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(s\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (2m\i);
+    \draw[->] (2m\i) ++(\linw,0) -- +(\arrowlength,0) coordinate (2a\i);
+    \coordinate[oplus=\oplusr, anchor=west] (2axor\i) at (2a\i);
+    \draw[<-] (2axor\i.north) -- +(0, \branchwidth/2 - \oplusr);
+
+    \pgfmathparse{mod(\i,3) == 2 ? 1 : 0}
+    \ifnum\pgfmathresult=1
+    % Code for when \i ≡ 2 (mod 3)
+    \draw[->] (2axor\i.east) --  +(2*\arrowlength + \sboxw,0) coordinate (3a\i);
+    \else
+    % Code for other values
+    \draw[->] (2axor\i.east) --  +(\arrowlength,0) coordinate (2s\i);
+    \draw[rounded corners]
+    ($(2s\i) + (0,-0.5*\sboxh)$) rectangle node (sbox\i) {$x^{\sfrac{1}{7}}$}
+    ($(2s\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(2s\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (3a\i);
+    \fi
+
+    \coordinate[oplus=\oplusr, anchor=west] (3axor\i) at (3a\i);
+    \draw[<-] (3axor\i.north) -- +(0, \branchwidth/2 - \oplusr);
+    \draw[->] (3axor\i.east) --  +(\arrowlength,0) coordinate (3s\i);
+
+    \draw[->] (3s\i) ++(\linw,0) -- +(\arrowlength,0) coordinate (3m\i);
+    \draw[->] (3m\i) ++(\linw,0) -- +(\arrowlength,0) coordinate (4a\i);
+    \coordinate[oplus=\oplusr, anchor=west] (4axor\i) at (4a\i);
+    \draw[<-] (4axor\i.north) -- +(0, \branchwidth/2 - \oplusr);
+    \draw[->] (4axor\i.east) --  +(\arrowlength,0) coordinate (end\i);
+  }
+
+  \foreach \i in {1,...,3} {
+    \coordinate (mcorner1) at ($(sbox1  -| \i m1) + (0, \sboxh/2)$);
+    \coordinate (mcorner2) at ($(sbox\b -| {$(\i m\b) + (\linw,0)$}) - (0, \sboxh/2)$);
+    \draw[rounded corners] (mcorner1) rectangle node {$M$} (mcorner2);
+  }
+
+  \foreach \i in {1,...,4} {
+    \pgfmathsetmacro{\inda}{int(3*\i-2)}
+    \pgfmathsetmacro{\indb}{int(3*\i)}
+    \coordinate (scorner1) at ($(sbox\inda -| 3s\inda)+ (0, \sboxh/2)$);
+    \coordinate (scorner2) at ($(sbox\indb -| {$(3s\indb) + (\linw,0)$}) - (0, \sboxh/2)$);
+    \draw[rounded corners] (scorner1) rectangle node {$x^7$} (scorner2);
+  }
+
+  \foreach \i in {1,...,4} {
+    \pgfmathsetmacro{\ind}{int(\i - 1)}
+    \node at ($(\i axor1) + (0, \branchwidth-\oplusr)$) {$C_{\ind}$};
+  }
+
+\end{tikzpicture}
+\end{document}
