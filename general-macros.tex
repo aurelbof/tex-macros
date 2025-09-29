@@ -8,6 +8,7 @@
 \usepackage{algorithm} % for algorithm environment
 \usepackage{algpseudocode} % for pseudocode inside algorithm environment. replaces algorithmic
 \usepackage{multirow} % for \multirow inside tabular environment
+\usepackage{booktabs} % for top/mid/bottomrule
 
 \usepackage{bm} % bold math symbols
 \usepackage{xfrac} % prettier inline fractions
@@ -20,6 +21,7 @@
 \usepackage{orcidlink} % for clickable orcid links in author
 \usepackage{subcaption} % like subfigure, but better
 \usepackage{cleveref} % for clever cross-referencing with \cref
+\usepackage{pifont} % checkmark and crossmark
 
 \input{tex-macros/theorems}
 \input{tex-macros/tikz-macros}
@@ -52,6 +54,8 @@
   urlcolor = my-magenta,
 }
 \setcounter{tocdepth}{2} % for metadata: 0 = to title, 3 = to subsubsecs
+\newcommand{\cmark}{\textcolor{my-gr1}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{my-red}{\ding{55}}}
 
 % new commands: \bibalias and \acite
 % 1. add \bibalias{<alias>}{<source>} in preamble
