@@ -1,0 +1,87 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\arrowlength{1em}
+  \def\midgap{3em}
+  \def\branchwidth{9em}
+  \def\sboxwidth{6em}
+  \def\sboxh{2em}
+  \def\oplusr{0.4em}
+  \def\linh{2em}
+  \def\lindist{2em}
+  \foreach \i in {0,...,3} {
+    \coordinate (x1\i) at ($(\i*\branchwidth,0)$);
+    \coordinate (x2\i) at ($(x1\i) + (0, -\arrowlength)$);
+    \coordinate (x3\i) at ($(x2\i) + (0, -\linh)$);
+    \coordinate (x3a\i) at ($(x3\i) + (0, -\midgap)$);
+    \coordinate (x4\i) at ($(x3a\i) + (0, -\midgap)$);
+    \coordinate (x4a\i) at ($(x4\i) + (0, -\midgap)$);
+    \coordinate (x5\i) at ($(x4a\i) + (0, -\midgap)$);
+    \coordinate (x6\i) at ($(x5\i) + (0, -\linh)$);
+    \coordinate (x7\i) at ($(x6\i) + (0, -\arrowlength)$);
+    \draw[->] (x1\i) -- (x2\i);
+    \draw[->] (x6\i) -- (x7\i);
+  }
+  \coordinate[oplus=\oplusr] (xor1a) at (x3a0);
+  \coordinate[oplus=\oplusr] (xor1b) at (x41);
+  \coordinate[oplus=\oplusr] (xor1c) at (x4a0);
+  \coordinate[oplus=\oplusr] (xor2a) at (x3a2);
+  \coordinate[oplus=\oplusr] (xor2b) at (x43);
+  \coordinate[oplus=\oplusr] (xor2c) at (x4a2);
+
+  \coordinate (a1) at ($(x20) + (-\lindist, 0)$);
+  \coordinate (a2) at ($(x33) + (\lindist, 0)$);
+  \draw[rounded corners] (a1) rectangle node {$\mathcal{A}_0$} (a2);
+
+  \coordinate (sl1a) at ($(x3a0) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (sl1b) at ($(x40) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (sl1c) at ($(x4a0) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (sl2a) at ($(x3a2) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (sl2b) at ($(x42) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (sl2c) at ($(x4a2) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \foreach \i in {1,2} {
+    \foreach \j in {a,b,c} {
+      \coordinate (sr\i\j) at ($(sl\i\j) + (\sboxwidth, 0)$);
+      \coordinate (scl\i\j) at ($(sl\i\j) + (0, {(\sboxh)/2})$);
+      \coordinate (scr\i\j) at ($(sr\i\j) + (0, {-(\sboxh)/2})$);
+    }
+  }
+  \draw[->] (x30) -- (xor1a);
+  \draw[->] (x31) -- (xor1b);
+  \draw[->] (x32) -- (xor2a);
+  \draw[->] (x33) -- (xor2b);
+  \draw[->] (xor1a) -- (xor1c);
+  \draw[->] (xor2a) -- (xor2c);
+  \draw[->] (xor1c) -- (x50);
+  \draw[->] (xor1b) -- (x51);
+  \draw[->] (xor2c) -- (x52);
+  \draw[->] (xor2b) -- (x53);
+
+  \draw[->] (x3a1) -- (sr1a);
+  \draw[->] (sl1a) -- (xor1a);
+  \draw[->] (x3a3) -- (sr2a);
+  \draw[->] (sl2a) -- (xor2a);
+
+  \draw[<-] (xor1b) -- (sr1b);
+  \draw[<-] (sl1b) -- (x40);
+  \draw[<-] (xor2b) -- (sr2b);
+  \draw[<-] (sl2b) -- (x42);
+
+  \draw[->] (x4a1) -- (sr1c);
+  \draw[->] (sl1c) -- (xor1c);
+  \draw[->] (x4a3) -- (sr2c);
+  \draw[->] (sl2c) -- (xor2c);
+
+  \foreach \i in {1,2} {
+    \draw[rounded corners] (scl\i a) rectangle node {$-gx^2 - g^{-1}$} (scr\i a);
+    \draw[rounded corners] (scl\i b) rectangle node {$-x^{1/\alpha}$} (scr\i b);
+    \draw[rounded corners] (scl\i c) rectangle node {$gx^2$} (scr\i c);
+  }
+
+  \coordinate (b1) at ($(x50) + (-\lindist, 0)$);
+  \coordinate (b2) at ($(x63) + (\lindist, 0)$);
+  \draw[rounded corners] (b1) rectangle node {$\mathcal{A}_{1}$} (b2);
+
+\end{tikzpicture}
+\end{document}
