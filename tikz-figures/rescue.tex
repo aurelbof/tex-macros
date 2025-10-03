@@ -1,0 +1,50 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\arrowlength{2em}
+  \def\branchwidth{3em}
+  \def\sboxw{2.5em}
+  \def\sboxh{\sboxw}
+  \def\linw{\sboxw}
+  \def\rcdist{1em}
+  \def\rcinc{2em}
+  \def\oplusr{0.5em}
+  \newcounter{branchnumber}
+  \setcounter{branchnumber}{4}
+  \edef\b{\arabic{branchnumber}}
+
+  \foreach \i in {1,...,\b} {
+    \coordinate (x\i) at (0,{-(\i)*\branchwidth});
+    \draw[->] (x\i) --  +(\arrowlength,0) coordinate (s\i);
+    \draw[rounded corners]
+    ($(s\i) + (0,-0.5*\sboxh)$) rectangle node (sbox\i) {$x^\alpha$}
+    ($(s\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(s\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (m\i);
+    \draw[->] (m\i) ++(\linw,0) -- +(\i*\rcinc,0) coordinate (rc\i);
+    \coordinate[oplus=\oplusr, anchor=west] (xor\i) at (rc\i);
+    \draw[->] ($(xor\i) + (0,{(\i-1)*\branchwidth + \rcdist})$)
+    node[anchor=south] {$c_{\i,1}$} -- (xor\i.north);
+    \draw[->] (xor\i.east) -- +({(\b - \i + 1) * \rcinc},0) coordinate (s2\i);
+
+    \draw[rounded corners]
+    ($(s2\i) + (0,-0.5*\sboxh)$) rectangle node (sbox2\i) {$x^{1/\alpha}$}
+    ($(s2\i) + (\sboxw,0.5*\sboxh)$);
+    \draw[->] ($(s2\i) + (\sboxw,0)$) -- +(\arrowlength,0)
+    coordinate (m2\i);
+    \draw[->] (m2\i) ++(\linw,0) -- +(\i*\rcinc,0) coordinate (rc2\i);
+    \coordinate[oplus=\oplusr, anchor=west] (xor2\i) at (rc2\i);
+    \draw[->] ($(xor2\i) + (0,{(\i-1)*\branchwidth + \rcdist})$)
+    node[anchor=south] {$c_{\i,2}$} -- (xor2\i.north);
+    \draw[->] (xor2\i.east) -- +({(\b - \i + 1) * \rcinc},0);
+  }
+
+  \coordinate (mcorner1) at ($(sbox1.north -| m1)$);
+  \coordinate (mcorner2) at ($(sbox\b.south -| {$(m\b) + (\linw,0)$})$);
+  \draw[rounded corners] (mcorner1) rectangle node {$M$} (mcorner2);
+  \coordinate (mcorner21) at ($(sbox21.north -| m21)$);
+  \coordinate (mcorner22) at ($(sbox2\b.south -| {$(m2\b) + (\linw,0)$})$);
+  \draw[rounded corners] (mcorner21) rectangle node {$M$} (mcorner22);
+\end{tikzpicture}
+\end{document}
