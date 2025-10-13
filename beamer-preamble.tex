@@ -1,4 +1,62 @@
-\input{tex-macros/general-macros}
+\usepackage{tikz} % tikz
+\usepackage{standalone} % tikz figures are often in standalone
+\usepackage{amsfonts} % mathbb etc
+\usepackage{amsmath} % crucial package
+\usepackage{amssymb} % symbols such as \nmid
+\usepackage{mathtools} % add/corr to asmmath, \vdotswithin
+\usepackage{todonotes} % very useful
+\usepackage{algorithm} % for algorithm environment
+\usepackage{algpseudocode} % for pseudocode inside algorithm environment. replaces algorithmic
+\usepackage{multirow} % for \multirow inside tabular environment
+\usepackage{booktabs} % for top/mid/bottomrule
+
+\usepackage{bm} % bold math symbols
+\usepackage{xfrac} % prettier inline fractions
+\usepackage{xcolor} % colors
+\usepackage{xcolor-solarized} % more colors
+\usepackage{xspace} % put at the end of command definitions to add spaces
+\usepackage[T1]{fontenc} % modern encoding, better than OT1, the default
+\usepackage{hyperref} % clickable links + pdf metadata
+\usepackage{hyperxmp} % enhances hyperref for xmp compliance
+\usepackage{orcidlink} % for clickable orcid links in author
+\usepackage{subcaption} % like subfigure, but better
+\usepackage{cleveref} % for clever cross-referencing with \cref
+\usepackage{pifont} % checkmark and crossmark
+
+\input{tex-macros/theorems}
+\input{tex-macros/tikz-macros}
+
+\newcommand{\bigOt}{\widetilde{\mathcal{O}}}
+\newcommand{\bigO}{\mathcal{O}}
+
+\colorlet{my-purple}{solarized-violet}
+\colorlet{my-red}{solarized-red}
+\colorlet{my-orange}{solarized-orange}
+\definecolor{my-darkor1}{HTML}{96240f}
+\definecolor{my-darkor2}{HTML}{7f180c}
+\definecolor{my-lb1}{HTML}{00557e}
+\definecolor{my-lb2}{HTML}{013157}
+\colorlet{my-blue}{solarized-blue}
+\definecolor{my-bl1}{HTML}{0d08a9}
+\definecolor{my-bl2}{HTML}{04037f}
+\colorlet{my-cyan}{solarized-cyan}
+\colorlet{my-green}{solarized-green}
+\definecolor{my-gr1}{HTML}{097e3e}
+\definecolor{my-gr2}{HTML}{025520}
+\colorlet{my-yellow}{solarized-yellow}
+\colorlet{my-magenta}{solarized-magenta}
+
+\hypersetup{
+  colorlinks = true, % fixes ugly boxes
+  linkcolor = my-red,
+  citecolor = my-green,
+  filecolor = my-cyan,
+  urlcolor = my-magenta,
+}
+\setcounter{tocdepth}{2} % for metadata: 0 = to title, 3 = to subsubsecs
+
+\newcommand{\myorcid}{0009-0003-0016-2667}
+\newcommand{\todoAU}[2][]{\todo[color=my-blue!30,#1]{Aurélien: #2}}
 
 \usefonttheme{structurebold} % bold sans serif titles etc
 \useinnertheme{rectangles} % itemize et enumerate: rectangles
@@ -22,23 +80,21 @@
 
 \setbeamertemplate{frametitle} % customize frame title
 {
-\begin{centering}
-\insertframetitle\par
-\end{centering}
+  \begin{centering}
+    \insertframetitle\par
+  \end{centering}
 }
 
 \usepackage{appendixnumberbeamer} % appendix pages don't count
-\usepackage{pifont} % checkmark and crossmark
-\usepackage{manfnt} % bend sign
 
 %\usepackage{caption}
 %\captionsetup[figure]{labelformat=empty} % no more fig
 
-\newcommand{\cmark}{\textcolor{mygr1}{\ding{51}}}
-\newcommand{\xmark}{\textcolor{myred}{\ding{55}}}
+\newcommand{\cmark}{\textcolor{my-gr1}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{my-red}{\ding{55}}}
 
-\usecolortheme[named=mylb2]{structure}
-\setbeamercolor{section in head/foot}{bg=mylb1!25} % background color of nav
+\usecolortheme[named=my-lb2]{structure}
+\setbeamercolor{section in head/foot}{bg=my-lb1!25} % background color of nav
 
 \AtBeginSection[]{
   \begin{frame}
