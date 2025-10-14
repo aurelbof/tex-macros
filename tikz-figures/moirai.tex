@@ -1,0 +1,58 @@
+%! TeX root = moirai.tex
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\newcommand{\tikzS}{$S$}
+\begin{tikzpicture}
+  \def\arrowlength{1em}
+  \def\midgap{2em}
+  \def\branchwidth{4em}
+  \def\sboxwidth{2.3em}
+  \def\oplusr{0.4em}
+  \def\linh{1.5em}
+  \foreach \i in {0,...,3} {
+    \coordinate (x1\i) at ($(\i*\branchwidth,0)$);
+    \coordinate (x2\i) at ($(x1\i) + (0, -\arrowlength)$);
+    \coordinate (x3\i) at ($(x2\i) + (0, -\linh)$);
+    \coordinate (x4\i) at ($(x3\i) + (0, -\midgap)$);
+    \coordinate (x5\i) at ($(x4\i) + (0, -\midgap)$);
+    \coordinate (x6\i) at ($(x5\i) + (0, -\linh)$);
+    \coordinate (x7\i) at ($(x6\i) + (0, -\arrowlength)$);
+    \draw[->] (x1\i) -- (x2\i);
+    \draw[->] (x6\i) -- (x7\i);
+  }
+  \draw[->] (x30) -- (x50);
+  \draw[->] (x32) -- (x52);
+  \coordinate[oplus=\oplusr] (xor1) at (x41);
+  \coordinate[oplus=\oplusr] (xor2) at (x43);
+  \draw[->] (x31) -- (xor1.north);
+  \draw[->] (x33) -- (xor2.north);
+  \draw[->] (xor1.south) -- (x51);
+  \draw[->] (xor2.south) -- (x53);
+
+  \coordinate (a1) at ($(x20) + (-\sboxwidth, 0)$);
+  \coordinate (a2) at ($(x33) + (\sboxwidth, 0)$);
+  \draw[rounded corners] (a1) rectangle node {$\mathcal{A}_0$} (a2);
+
+  \coordinate (s10) at ($(x40) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (s20) at ($(s10) + (\sboxwidth, 0)$);
+  \draw[->] (x40) -- (s10);
+  \draw[->] (s20) -- (xor1.west);
+  \coordinate (sc1) at ($(s10) + (0, {(\sboxwidth)/2})$);
+  \coordinate (sc2) at ($(s20) + (0, {-(\sboxwidth)/2})$);
+  \draw[rounded corners] (sc1) rectangle node {\tikzS} (sc2);
+
+  \coordinate (s12) at ($(x42) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (s22) at ($(s12) + (\sboxwidth, 0)$);
+  \draw[->] (x42) -- (s12);
+  \draw[->] (s22) -- (xor2.west);
+  \coordinate (sd1) at ($(s12) + (0, {(\sboxwidth)/2})$);
+  \coordinate (sd2) at ($(s22) + (0, {-(\sboxwidth)/2})$);
+  \draw[rounded corners] (sd1) rectangle node {\tikzS} (sd2);
+
+  \coordinate (b1) at ($(x50) + (-\sboxwidth, 0)$);
+  \coordinate (b2) at ($(x63) + (\sboxwidth, 0)$);
+  \draw[rounded corners] (b1) rectangle node {$\mathcal{A}_{1}$} (b2);
+
+\end{tikzpicture}
+\end{document}
