@@ -1,7 +1,8 @@
+%! TeX root = ./sponge.tex
 \documentclass{standalone}
 \input{tex-macros/tikz-standalone}
 \begin{document}
-\begin{tikzpicture}[scale=\scale]
+\begin{tikzpicture}
   \def\arrowlength{5em}
   \def\branchdistance{.5cm}
   \def\oplusr{.3em}
@@ -12,10 +13,13 @@
   \def\permrech{6*\branchdistance}
   \def\shortendd{1em}
   \def\ratevertmarg{.5em}
+  \def\textmargin{.5em}
 
   \tikzstyle{permrec} = [draw, rectangle, rounded corners, inner sep=0em,
   minimum width=\permrecw, minimum height=\permrech]
   \tikzstyle{dotdash} = [dash pattern=on 0pt off 1mm, line cap=round, thick]
+  \tikzstyle{brace} = [decorate, decoration={brace, amplitude=5pt},
+  line width=.5pt]
 
   \foreach \z in {1,...,6} {
     \coordinate (x\z) at ($\z*(0,-\branchdistance)$);
@@ -55,7 +59,7 @@
   \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (y34) {$P$};
   \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (y44) {$P$};
 
-  \draw[decorate, decoration={brace}] (y51) ++(\outputoff,.5em) -- node[right] {\ output} ++(0,-2*\branchdistance - 1em);
+  \draw[brace] (y51) ++(\outputoff,.5em) -- node[right=\textmargin] {output} ++(0,-2*\branchdistance - 1em);
 
   \node[xshift=-\outputoff] at (x1) {$0$};
   \node[xshift=-\outputoff] at (x3) {$0$};
@@ -65,13 +69,12 @@
   \node[xshift=-\outputoff] at (x6.west) {$0$};
   \node[yshift=\inputdist] at (xor1) {input$_0$};
 
-  \coordinate[xshift=-3*\outputoff, yshift=\ratevertmarg] (r1) at (x1);
-  \coordinate[xshift=-3*\outputoff, yshift=-\ratevertmarg] (r2) at (x3);
-  \draw[<->] (r1) -- (r2) node[left,pos=0.5] {rate};
+  \coordinate[xshift=-2*\outputoff, yshift=\ratevertmarg] (r1) at (x1);
+  \coordinate[xshift=-2*\outputoff, yshift=-\ratevertmarg] (r2) at (x3);
+  \draw[brace] (r2) -- (r1) node[left=\textmargin,pos=0.5] {rate};
 
-  \coordinate[xshift=-3*\outputoff, yshift=\ratevertmarg] (c1) at (x4);
-  \coordinate[xshift=-3*\outputoff, yshift=-\ratevertmarg] (c2) at (x6);
-  \draw[<->] (c1) -- (c2) node[left,pos=0.5] {capacity};
-
+  \coordinate[xshift=-2*\outputoff, yshift=\ratevertmarg] (c1) at (x4);
+  \coordinate[xshift=-2*\outputoff, yshift=-\ratevertmarg] (c2) at (x6);
+  \draw[brace] (c2) -- (c1) node[left=\textmargin,pos=0.5] {capacity};
 \end{tikzpicture}
 \end{document}
