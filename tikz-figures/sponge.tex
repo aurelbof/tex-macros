@@ -1,0 +1,77 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}[scale=\scale]
+  \def\arrowlength{5em}
+  \def\branchdistance{.5cm}
+  \def\oplusr{.3em}
+  \def\oplusuparr{.5em}
+  \def\inputdist{1.4em}
+  \def\outputoff{.5em}
+  \def\permrecw{1.3em}
+  \def\permrech{6*\branchdistance}
+  \def\shortendd{1em}
+  \def\ratevertmarg{.5em}
+
+  \tikzstyle{permrec} = [draw, rectangle, rounded corners, inner sep=0em,
+  minimum width=\permrecw, minimum height=\permrech]
+  \tikzstyle{dotdash} = [dash pattern=on 0pt off 1mm, line cap=round, thick]
+
+  \foreach \z in {1,...,6} {
+    \coordinate (x\z) at ($\z*(0,-\branchdistance)$);
+    \coordinate (y\z) at ($(\arrowlength,-\z*\branchdistance)$);
+    \draw[->] (x\z) -- (y\z);
+    \coordinate[xshift=\permrecw] (xx\z) at (y\z);
+    \coordinate[xshift=\arrowlength] (yy\z) at (xx\z);
+    \coordinate[xshift=\permrecw] (x3\z) at (yy\z);
+    \coordinate[xshift=\arrowlength] (y3\z) at (x3\z);
+    \coordinate[xshift=\permrecw] (x4\z) at (y3\z);
+    \coordinate[xshift=\arrowlength] (y4\z) at (x4\z);
+    \coordinate[xshift=\permrecw] (x5\z) at (y4\z);
+    \draw[->] (xx\z) -- (yy\z);
+    \draw[dotdash, shorten <=\shortendd, shorten >=\shortendd] (x3\z) -- (y3\z);
+    \draw[->] (x4\z) -- (y4\z);
+  }
+  \foreach \z in {1,...,3} {
+    \node[oplus=\oplusr] (xor\z) at ($({\arrowlength/2},-\z*\branchdistance)$)  {};
+    \draw[->] (x\z) -- (xor\z);
+    \draw[->] (xor\z.east) -- (y\z);
+    \draw[<-] (xor\z.north) -- +(0,\oplusuparr);
+    \coordinate[oplus=\oplusr, xshift=\arrowlength/2] (xor2\z) at (xx\z);
+    \draw[->] (xx\z) -- (xor2\z.west);
+    \draw[->] (xor2\z.east) -- (yy\z);
+    \draw[<-] (xor2\z.north) -- +(0, \oplusuparr);
+    \coordinate[oplus=\oplusr, xshift=\arrowlength/2] (xor4\z) at (x4\z);
+    \draw[->] (x4\z) -- (xor4\z.west);
+    \draw[->] (xor4\z.east) -- (y4\z);
+    \draw[<-] (xor4\z.north) -- +(0, \oplusuparr);
+    \draw[->] (x5\z) -- +(\arrowlength/2,0) coordinate (y5\z);
+  }
+  \node[yshift=\inputdist] at (xor21) {input$_1$};
+  \node[yshift=\inputdist] at (xor41) {input$_n$};
+
+  \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (y4) {$P$};
+  \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (yy4) {$P$};
+  \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (y34) {$P$};
+  \node[permrec, xshift=\permrecw/2, yshift=\branchdistance/2] at (y44) {$P$};
+
+  \draw[decorate, decoration={brace}] (y51) ++(\outputoff,.5em) -- node[right] {\ output} ++(0,-2*\branchdistance - 1em);
+
+  \node[xshift=-\outputoff] at (x1) {$0$};
+  \node[xshift=-\outputoff] at (x3) {$0$};
+  \draw[dotdash] (x1.west) ++(-\outputoff,-0.5*\branchdistance) -- +(0,-\branchdistance);
+  \node[xshift=-\outputoff] at (x4.west) {$0$};
+  \draw[dotdash] (x4.west) ++(-\outputoff,-0.5*\branchdistance) -- +(0,-\branchdistance);
+  \node[xshift=-\outputoff] at (x6.west) {$0$};
+  \node[yshift=\inputdist] at (xor1) {input$_0$};
+
+  \coordinate[xshift=-3*\outputoff, yshift=\ratevertmarg] (r1) at (x1);
+  \coordinate[xshift=-3*\outputoff, yshift=-\ratevertmarg] (r2) at (x3);
+  \draw[<->] (r1) -- (r2) node[left,pos=0.5] {rate};
+
+  \coordinate[xshift=-3*\outputoff, yshift=\ratevertmarg] (c1) at (x4);
+  \coordinate[xshift=-3*\outputoff, yshift=-\ratevertmarg] (c2) at (x6);
+  \draw[<->] (c1) -- (c2) node[left,pos=0.5] {capacity};
+
+\end{tikzpicture}
+\end{document}
