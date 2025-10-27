@@ -1,0 +1,79 @@
+%! TeX root = moirai-half.tex
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\newcommand{\tikzS}{$S$}
+\begin{tikzpicture}
+  \def\arrowlength{1em}
+  \def\midgap{2em}
+  \def\branchwidth{4em}
+  \def\sboxwidth{2.3em}
+  \def\oplusr{0.4em}
+  \def\linh{1.5em}
+  \def\sideadd{1.2em}
+  \def\feistelgap{5em}
+  \def\bendiness{0.3}
+  \foreach \i in {0,...,3} {
+    \coordinate (x1\i) at ($(\i*\branchwidth,0)$);
+    \coordinate (x2\i) at ($(x1\i) + (0, -\arrowlength)$);
+    \coordinate (x3\i) at ($(x2\i) + (0, -\linh)$);
+    \coordinate (x4\i) at ($(x3\i) + (0, -\midgap)$);
+    \coordinate (x5\i) at ($(x4\i) + (0, -\midgap)$);
+    \coordinate (x6\i) at ($(x5\i) + (0, -\linh)$);
+    \coordinate[oplus=\oplusr] (x7\i) at ($(x6\i) + (0, -\arrowlength)$);
+    \coordinate (x8\i) at ($(x7\i) + (0, -\feistelgap)$);
+    \coordinate (x9\i) at ($(x8\i) + (0, -\arrowlength/2)$);
+
+    \coordinate (add\i) at ($(x7\i) + (-\sideadd,0)$);
+    \draw[->] (x1\i) -- (x2\i);
+    \draw[->] (add\i) -- (x7\i.west);
+    \draw[->] (x8\i) -- (x9\i);
+    \pgfmathtruncatemacro{\ip}{\i + 1}
+    \node[anchor=east] at (add\i) {$c_{\ip,1}$};
+  }
+  \draw[->] (x30) -- (x50);
+  \draw[->] (x32) -- (x72.north);
+  \coordinate[oplus=\oplusr] (xor1) at (x41);
+  \coordinate[oplus=\oplusr] (xor2) at (x43);
+  \draw[->] (x31) -- (xor1.north);
+  \draw[->] (x33) -- (xor2.north);
+  \draw[->] (xor1.south) -- (x51);
+  \draw[->] (xor2.south) -- (x73);
+  \draw[->] (x60) -- (x70);
+  \draw[->] (x61) -- (x71);
+
+  \coordinate (a1) at ($(x20) + (-\sboxwidth, 0)$);
+  \coordinate (a2) at ($(x33) + (\sboxwidth, 0)$);
+  \draw[rounded corners] (a1) rectangle node {$\mathcal{A}_0$} (a2);
+
+  \coordinate (s10) at ($(x40) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (s20) at ($(s10) + (\sboxwidth, 0)$);
+  \draw[->] (x40) -- (s10);
+  \draw[->] (s20) -- (xor1.west);
+  \coordinate (sc1) at ($(s10) + (0, {(\sboxwidth)/2})$);
+  \coordinate (sc2) at ($(s20) + (0, {-(\sboxwidth)/2})$);
+  \draw[rounded corners] (sc1) rectangle node {\tikzS} (sc2);
+
+  \coordinate (s12) at ($(x42) + ({(\branchwidth - \sboxwidth)/2}, 0)$);
+  \coordinate (s22) at ($(s12) + (\sboxwidth, 0)$);
+  \draw[->] (x42) -- (s12);
+  \draw[->] (s22) -- (xor2.west);
+  \coordinate (sd1) at ($(s12) + (0, {(\sboxwidth)/2})$);
+  \coordinate (sd2) at ($(s22) + (0, {-(\sboxwidth)/2})$);
+  \draw[rounded corners] (sd1) rectangle node {\tikzS} (sd2);
+
+  \coordinate (b1) at ($(x50) + (-\sboxwidth, 0)$);
+  \coordinate (b2) at ($(x61) + (\sboxwidth, 0)$);
+  \draw[rounded corners] (b1) rectangle node {$\mathcal{M}'$} (b2);
+
+  \draw (x70.south) .. controls ($(x80) + (0, {\feistelgap*\bendiness})$) and
+  ($(x72) + (0, {-\feistelgap*\bendiness})$) .. (x82);
+  \draw (x71.south) .. controls ($(x81) + (0, {\feistelgap*\bendiness})$) and
+  ($(x73) + (0, {-\feistelgap*\bendiness})$) .. (x83);
+  \draw (x72.south) .. controls ($(x82) + (0, {\feistelgap*\bendiness})$) and
+  ($(x70) + (0, {-\feistelgap*\bendiness})$) .. (x80);
+  \draw (x73.south) .. controls ($(x83) + (0, {\feistelgap*\bendiness})$) and
+  ($(x71) + (0, {-\feistelgap*\bendiness})$) .. (x81);
+
+\end{tikzpicture}
+\end{document}
