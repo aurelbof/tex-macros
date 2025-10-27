@@ -1,0 +1,49 @@
+\documentclass{standalone}
+\input{tex-macros/tikz-standalone}
+\begin{document}
+\begin{tikzpicture}
+  \def\boxw{1em}
+  \def\boxh{1em}
+  \def\hboxw{3em}
+  \def\hboxh{\hboxw}
+  \def\dotsdist{.5em}
+  \def\arrowlength{2em}
+  \def\arrowmargin{.1em}
+  \def\bracedist{1em}
+  \newcounter{inputnb}
+  \setcounter{inputnb}{6}
+  \edef\in{\arabic{inputnb}}
+  \newcounter{dotsnb}
+  \setcounter{dotsnb}{3}
+  \edef\dn{\arabic{dotsnb}}
+  \newcounter{outputnb}
+  \setcounter{outputnb}{8}
+  \edef\out{\arabic{outputnb}}
+
+  \tikzstyle{datarec} = [draw, rectangle, minimum width=\boxw, minimum height=\boxh]
+  \tikzstyle{hashrec} = [draw, rectangle, minimum width=\hboxw, minimum height=\hboxh]
+  \tikzstyle{myarrow} = [->, shorten >= \arrowmargin, shorten <= \arrowmargin]
+
+  \foreach \i in {1,...,\in} {
+    \node[datarec] (in\i) at (\i*\boxw,0) {};
+  }
+  \foreach \i in {1,...,\dn} {
+    \node (dn\i) at ($(in\in.east) + (\i*\dotsdist,0)$) {$\cdot$};
+  }
+  \node[hashrec, anchor=west] (hash) at ($(dn\dn.east) + (\arrowlength,0)$) {Hash};
+  \draw[myarrow] (dn\dn) -- (hash);
+
+  \foreach \i in {1,...,\out} {
+    \node[datarec, anchor=west] (out\i) at ($(hash.east) + ({\arrowlength + (\i-1)*\boxw},0)$) {};
+  }
+  \draw[myarrow] (hash) -- (out1);
+
+  \node[yshift=-\bracedist] (brace1l) at (in1.west) {};
+  \node[yshift=-\bracedist] (brace1r) at (dn\dn.east) {};
+  \draw[decorate, decoration={brace}] (brace1r) -- node[below] {input (any size)} (brace1l);
+
+  \node[yshift=-\bracedist] (brace2l) at (out1.west) {};
+  \node[yshift=-\bracedist] (brace2r) at (out\out.east) {};
+  \draw[decorate, decoration={brace}] (brace2r) -- node[below] {output (fixed size)} (brace2l);
+\end{tikzpicture}
+\end{document}
