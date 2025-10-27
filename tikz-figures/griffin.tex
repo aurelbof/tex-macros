@@ -9,25 +9,25 @@
 
   \draw[rounded corners] (-1cm,-.12cm) rectangle node {Affine} (8.5cm,.5cm);
 
-  
-  \node[circle,draw,myred,inner sep=0pt] (Pow1) [below=.4cm of x0, draw, distance=3cm] {$(\cdot)^{1/\alpha}$};
+
+  \node[circle,draw,my-red,inner sep=0pt] (Pow1) [below=.4cm of x0, draw, distance=3cm] {$(\cdot)^{1/\alpha}$};
   \node (Pow2) [below=.6cm of x1, draw, distance=3cm] {$(\cdot)^\alpha$};
-  
+
   \node[draw] (Q1) at ($(3.75cm,-2.5cm)$) {$Q_2$};
   \node[draw] (Q2) at ($(6.25cm,-3.5cm)$) {$Q_3$};
-  
+
   \node (M1) at (Q1 -| y2) [scale=1.5, inner sep = -0.02cm] {$\bm{\otimes}$};
   \node (M2) at (Q2 -| y3) [scale=1.5, inner sep = -0.02cm] {$\bm{\otimes}$};
   \node (O) [above of = Q1, node distance = 1cm] {$0$};
-  
+
   \node (B1) at ($(0cm, -2.375cm)$) {};
   \node (B2) at ($(2.5cm, -2.625cm)$) {};
-  
+
   \node (B3) at ($(0, -3.375cm)$) {};
   \node (B4) at ($(2.5cm, -3.625cm)$) {};
-  
+
   \node[above of = M1, distance = 2cm] (B5) {};
-  
+
   \draw[->] (x0) -- (Pow1);
   \draw[->] (x1) -- (Pow2);
   \draw[->] (x2) -- (M1);
@@ -36,17 +36,17 @@
   \foreach \z in {0,...,3} {
     \draw[->] (\z*2.5cm,1cm) -- (\z*2.5cm,.5cm);
   }
-  
+
   \draw[->] (Pow1) -- (y0);
   \draw[->] (Pow2) -- (y1);
   \draw[->] (M1) -- (y2);
   \draw[->] (M2) -- (y3);
-  
+
   \draw[->] (B1.center) -- (B1.center -| Q1.west);
   \draw[->] (B2.center) -- (B2.center -| Q1.west);
   \draw[->] (B3.center) -- (B3.center -| Q2.west);
   \draw[->] (B4.center) -- (B4.center -| Q2.west);
-  \draw[->] (O) 	-- (Q1);
+  \draw[->] (O)   -- (Q1);
   \draw[->] (B5.center) -- (B5.center -| Q2) -- (Q2);
   \draw[->] (Q1) -- (M1);
   \draw[->] (Q2) -- (M2);
