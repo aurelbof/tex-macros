@@ -29,7 +29,7 @@
     \coordinate[xshift=\arrowlength] (y4\z) at (x4\z);
     \coordinate[xshift=\permrecw] (x5\z) at (y4\z);
     \draw[->] (xx\z) -- (yy\z);
-    \draw[dotdash, shorten <=\shortendd, shorten >=\shortendd] (x3\z) -- (y3\z);
+    \draw[dotdash, ->, shorten <=\shortendd, shorten >=\shortendd] (x3\z) -- (y3\z);
     \draw[->] (x4\z) -- (y4\z);
   }
   \foreach \z in {1,...,3} {
