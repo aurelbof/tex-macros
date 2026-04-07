@@ -40,6 +40,24 @@
       }
     },
   }
+  boxplus/.style={
+    rectangle, draw,
+    minimum size=2*#1, % diameter = 2 * radius
+    inner sep=0pt,
+    transform shape=true,
+    append after command={
+      % Draw vertical line
+      \pgfextra{
+        \def\r{#1}
+        % Draw vertical line
+        \draw ($(\tikzlastnode) + (0,-\r)$) --
+        ($(\tikzlastnode) + (0,\r)$);
+        % Draw horizontal line
+        \draw ($(\tikzlastnode) + (-\r,0)$) --
+        ($(\tikzlastnode) + (\r,0)$);
+      }
+    },
+  }
 }
 
 % usage: \includetikz[scale=XX]{fig}, fetches from my local database
